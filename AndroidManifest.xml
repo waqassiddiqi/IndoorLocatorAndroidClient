@@ -60,7 +60,10 @@
         
         <activity
             android:name=".ui.AddNewMapActivity" 
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask" 
+            android:label="Add new Map"
+            android:theme="@style/Theme.Base.AppCompat.Dialog.Light.FixedSize"
+            >
         </activity>
         
         <activity

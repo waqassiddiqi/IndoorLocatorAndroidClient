@@ -2,7 +2,6 @@ package org.redpin.android.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -27,7 +26,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,7 +39,6 @@ import com.google.gson.reflect.TypeToken;
 
 public class AddNewMapActivity extends ActionBarActivity implements UploadImageTaskCallback {
 
-	ActionBar actionBar;
 	Button btnAdd;
 	ProgressDialog mProgress;
 	final static int REQ_CODE_PICK_IMAGE = 1;
@@ -61,14 +58,6 @@ public class AddNewMapActivity extends ActionBarActivity implements UploadImageT
 		mProgress = new ProgressDialog(this);
 		mProgress.setMessage("Uploading file...");
 		
-		actionBar = getSupportActionBar();
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.show();
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME,
-				ActionBar.DISPLAY_SHOW_CUSTOM);
-		actionBar.setTitle("Indoor Location Tracker");
-		actionBar.setSubtitle("Add new map");
-		
 		findViewById(R.id.btnSelectImage).setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -85,7 +74,13 @@ public class AddNewMapActivity extends ActionBarActivity implements UploadImageT
 			public void onClick(View v) {
 				
 				if(txtMapName.getText().toString().trim().length() <= 0) {
-					Toast.makeText(AddNewMapActivity.this, "Please select image to upload", 
+					Toast.makeText(AddNewMapActivity.this, "Please provide a map name", 
+							Toast.LENGTH_SHORT).show();
+					return ;
+				}
+				
+				if(attachedFilePath.trim().length() <= 0) {
+					Toast.makeText(AddNewMapActivity.this, "Please select an image file for map", 
 							Toast.LENGTH_SHORT).show();
 					return ;
 				}
@@ -191,6 +186,8 @@ public class AddNewMapActivity extends ActionBarActivity implements UploadImageT
 				try {
 					copyMapImage(m.getMapURL());
 				} catch (Exception e) { }
+				
+				finish();
 			}
 		}
 	}

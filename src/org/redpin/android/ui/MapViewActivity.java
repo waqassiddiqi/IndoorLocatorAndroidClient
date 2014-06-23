@@ -116,11 +116,6 @@ public class MapViewActivity extends Activity {
 		setContentView(R.layout.map_view);
 		mapView = (MapView) findViewById(R.id.map_view_component);
 		
-		Map m = new Map();
-		m.setLocalId(1);
-		m.setMapName("Condo");
-		m.setRemoteId(1);
-		
 		
 		mapName = (TextView) findViewById(R.id.map_name);
 		mapTopBar = (RelativeLayout) findViewById(R.id.map_topbar);

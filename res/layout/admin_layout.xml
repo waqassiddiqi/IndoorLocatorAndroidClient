@@ -17,6 +17,13 @@
             android:layout_marginBottom="20dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        
+        <Button
+            android:id="@+id/btnAddMap"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Add new Map" />
+        
         <Button
             android:id="@+id/btnManageMap"
             android:layout_width="200dp"

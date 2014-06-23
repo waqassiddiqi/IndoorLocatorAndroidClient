@@ -42,6 +42,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -148,7 +149,7 @@ public class MapView extends FrameLayout implements DownloadImageTaskCallback,
 				FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.MATCH_PARENT));
 		loadingView.setGravity(Gravity.CENTER);
-		loadingView.setTextColor(R.color.light_grey);
+		loadingView.setTextColor(getResources().getColor(R.color.light_grey));
 		loadingView.setTextSize(30);
 		loadingView.setTypeface(Typeface.DEFAULT_BOLD);
 		loadingView.setText(R.string.loading_text);
@@ -252,8 +253,10 @@ public class MapView extends FrameLayout implements DownloadImageTaskCallback,
 		loadingView.startAnimation(fadeIn());
 		loadingView.setVisibility(VISIBLE);
 
-		DownloadImageTask task = new DownloadImageTask(this);
-		task.execute(url);
+		//DownloadImageTask task = new DownloadImageTask(this);
+		//task.execute(url);
+		
+		onImageDownloaded(url, Environment.getExternalStorageDirectory() + "/indoormaps/" + url);
 	}
 
 	/**

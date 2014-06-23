@@ -11,6 +11,7 @@ import org.redpin.android.core.Measurement;
 import org.redpin.android.json.GsonFactory;
 import org.redpin.android.net.HttpPostCommand;
 import org.redpin.android.net.wifi.WifiSniffer;
+import org.redpin.android.provider.RedpinContract;
 import org.redpin.android.ui.list.MapListActivity;
 
 import android.app.AlertDialog;
@@ -37,7 +38,7 @@ import com.google.gson.reflect.TypeToken;
 public class AdminActivity extends ActionBarActivity {
 
 	private ActionBar actionBar;
-	private Button btnAdd, btnDetect, btnManageMap;
+	private Button btnAdd, btnDetect, btnManageMap, btnAddMap;
 	
 	ProgressDialog progressDialog;
 
@@ -83,8 +84,27 @@ public class AdminActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(AdminActivity.this, AddNewMapActivity.class);
-				startActivity(intent);
+				
+				 if(getContentResolver().query(RedpinContract.Map.CONTENT_URI, 
+						 new String[] { RedpinContract.Map.NAME }, null, null, null).getCount() == 0) {
+					
+					 Intent intent = new Intent(AdminActivity.this, AddNewMapActivity.class);
+					 startActivity(intent);
+					 
+				 } else {
+					 Intent intent = new Intent(AdminActivity.this, MapListActivity.class);
+					 startActivity(intent);					 
+				 }
+			}
+		});
+		
+		btnAddMap = (Button) findViewById(R.id.btnAddMap);
+		btnAddMap.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 Intent intent = new Intent(AdminActivity.this, AddNewMapActivity.class);
+				 startActivity(intent);
 			}
 		});
 		
