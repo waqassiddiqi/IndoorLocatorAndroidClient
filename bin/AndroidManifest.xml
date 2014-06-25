@@ -59,6 +59,11 @@
         </activity>
         
         <activity
+            android:name=".ui.MainMapViewActivity" 
+            android:launchMode="singleTask" >
+        </activity>
+        
+        <activity
             android:name=".ui.AddNewMapActivity" 
             android:launchMode="singleTask" 
             android:label="Add new Map"
@@ -69,6 +74,12 @@
         <activity
             android:name=".ui.AddLocationActivity"
             android:label="Add new location"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Base.AppCompat.Dialog.Light.FixedSize" />
+        
+        <activity
+            android:name=".ui.AddUserActivity"
+            android:label="Add new User"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Base.AppCompat.Dialog.Light.FixedSize" />
 

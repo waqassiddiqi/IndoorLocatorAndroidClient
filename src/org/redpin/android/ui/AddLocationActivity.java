@@ -12,6 +12,7 @@ import org.redpin.android.core.Map;
 import org.redpin.android.core.Measurement;
 import org.redpin.android.core.Vector;
 import org.redpin.android.core.measure.WiFiReading;
+import org.redpin.android.db.EntityHomeFactory;
 import org.redpin.android.json.GsonFactory;
 import org.redpin.android.net.HttpPostCommand;
 import org.redpin.android.net.wifi.WifiSniffer;
@@ -46,6 +47,9 @@ public class AddLocationActivity extends ActionBarActivity {
 	Vector<WiFiReading> vectorWifi;
 	Measurement measurement;
 	
+	float x, y;
+	long mapId;
+	
 	private static final String TAG = AddLocationActivity.class.getSimpleName();
 	
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,8 @@ public class AddLocationActivity extends ActionBarActivity {
 		progressDialog.setIndeterminate(true);
 		progressDialog.setMessage("Taking readings...");
 		
+		getMapCoordinates();
+		
 		findViewById(R.id.btnAdd).setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -67,6 +73,16 @@ public class AddLocationActivity extends ActionBarActivity {
 				addNewLocation();
 			}
 		});
+	}
+	
+	private void getMapCoordinates() {
+		Bundle extra = getIntent().getExtras();
+		if(extra != null) {
+			x = extra.getFloat("x");
+			y = extra.getFloat("y");
+			
+			mapId = extra.getInt("mapId");
+		}
 	}
 	
 	private void addNewLocation() {
@@ -87,10 +103,10 @@ public class AddLocationActivity extends ActionBarActivity {
 		Location location = new Location();
 		location.setSymbolicID(txtLocationName.getText().toString().trim());
 		
-		Map map = new Map();
-		map.setRemoteId(1);
-		map.setLocalId(1);
+		Map map = EntityHomeFactory.getMapHome().getById(mapId);
 		
+		location.setMapXcord((int) x);
+		location.setMapYcord((int) y);
 		location.setMap(map);
 		
 		mLocation = location;

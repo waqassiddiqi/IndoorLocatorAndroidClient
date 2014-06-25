@@ -4,8 +4,10 @@ import org.example.touch.WrapMotionEvent;
 import org.redpin.android.R;
 import org.redpin.android.core.Map;
 import org.redpin.android.db.EntityHomeFactory;
+import org.redpin.android.util.PreferenceUtil;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -19,7 +21,9 @@ import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,20 +31,22 @@ public class MainMapViewActivity extends ActionBarActivity implements OnTouchLis
 	
 	private static final String TAG = MainMapViewActivity.class.getSimpleName();
 	
+	Map mCurrentMap;
+	
 	ImageView imgMap;
 	Matrix matrix = new Matrix();
 	Matrix savedMatrix = new Matrix();
 
-	// We can be in one of these 3 states
 	static final int NONE = 0;
 	static final int DRAG = 1;
 	static final int ZOOM = 2;
 	int mode = NONE;
 
-	// Remember some things for zooming
 	PointF start = new PointF();
 	PointF mid = new PointF();
 	float oldDist = 1f;
+	
+	Button btnSetDefault;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,6 +55,9 @@ public class MainMapViewActivity extends ActionBarActivity implements OnTouchLis
 		
 		imgMap = (ImageView) findViewById(R.id.imgMap);
 		imgMap.setVisibility(View.GONE);
+		
+		btnSetDefault = (Button) findViewById(R.id.btnSetDefault);
+		btnSetDefault.setEnabled(false);
 		
 		show();
 	}
@@ -65,6 +74,8 @@ public class MainMapViewActivity extends ActionBarActivity implements OnTouchLis
 		if(m == null) {
 			finish();
 		}
+		
+		mCurrentMap = m;
 	
 		imgMap.setOnTouchListener(this);
 		matrix.setTranslate(1f, 1f);
@@ -75,6 +86,16 @@ public class MainMapViewActivity extends ActionBarActivity implements OnTouchLis
 		
 		imgMap.setImageBitmap(bm);
 		imgMap.setVisibility(View.VISIBLE);
+		
+		btnSetDefault.setEnabled(true);
+		
+		btnSetDefault.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				PreferenceUtil.setDefaultMap(mCurrentMap.getLocalId());
+			}
+		});
 	}
 	
 	public boolean onTouch(View v, MotionEvent rawEvent) {
@@ -141,7 +162,7 @@ public class MainMapViewActivity extends ActionBarActivity implements OnTouchLis
 		}
 
 		view.setImageMatrix(matrix);
-		return true; // indicate event was handled
+		return true;
 	}
 
 	/** Determine the space between the first two fingers */
@@ -176,6 +197,13 @@ public class MainMapViewActivity extends ActionBarActivity implements OnTouchLis
 				@Override
 				public void run() {
 					Toast.makeText(MainMapViewActivity.this, "X: " + x + ", Y: " + y, Toast.LENGTH_LONG).show();
+					
+					Intent intent = new Intent(MainMapViewActivity.this, AddLocationActivity.class);
+					intent.putExtra("x", x);
+					intent.putExtra("y", y);
+					intent.putExtra("mapId", mCurrentMap.getLocalId());
+					
+					startActivityForResult(intent, 0);
 				}
 			});
 		}

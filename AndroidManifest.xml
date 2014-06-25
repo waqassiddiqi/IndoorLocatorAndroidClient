@@ -76,6 +76,12 @@
             android:label="Add new location"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Base.AppCompat.Dialog.Light.FixedSize" />
+        
+        <activity
+            android:name=".ui.AddUserActivity"
+            android:label="Add new User"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Base.AppCompat.Dialog.Light.FixedSize" />
 
         <service android:name=".net.InternetConnectionManager" />
         <service android:name=".net.wifi.WifiSniffer" >
