@@ -98,6 +98,9 @@ public class SelectionActivity extends ActionBarActivity {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
 								PreferenceUtil.setUsername(spinner.getSelectedItem().toString());
+								
+								Intent intent = new Intent(SelectionActivity.this, LocateUserActivity.class);
+								startActivity(intent);
 							}
 						});
 
