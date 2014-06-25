@@ -29,7 +29,7 @@ import org.redpin.android.net.InternetConnectionManager;
 import org.redpin.android.net.home.MapRemoteHome;
 import org.redpin.android.provider.RedpinContract;
 import org.redpin.android.ui.AddNewMapActivity;
-import org.redpin.android.ui.MapViewActivity;
+import org.redpin.android.ui.MainMapViewActivity;
 
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;
@@ -171,7 +171,7 @@ public class MapListActivity extends ListActivity implements
 		if (position < 0)
 			return;
 
-		Intent i = new Intent(this, MapViewActivity.class);
+		Intent i = new Intent(this, MainMapViewActivity.class);
 		i.setData(RedpinContract.Map.buildQueryUri(id));
 		startActivity(i);
 
