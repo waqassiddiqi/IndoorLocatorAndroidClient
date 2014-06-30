@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import org.redpin.android.ApplicationContext;
 import org.redpin.android.R;
 import org.redpin.android.ui.MapViewActivity;
 
@@ -156,21 +157,22 @@ public class InternetConnectionManager extends Service {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 
-			if (intent.getFlags() == ONLINE_FLAG) {
+			
+			if (intent.getBooleanExtra("isOnline", false)) {
 				if (!hasNotifiedOnlineState) {
 
 					showNotification(R.string.connection_online);
 					hasNotifiedOnlineState = true;
 
 				}
-				hasNotifiedOfflineState = false;
+				hasNotifiedOnlineState = false;
 			} else {
 
 				if (!hasNotifiedOfflineState) {
 					showNotification(R.string.connection_offline);
 					hasNotifiedOfflineState = true;
 				}
-				hasNotifiedOnlineState = false;
+				hasNotifiedOfflineState = false;
 			}
 
 			mChecker = null;
@@ -219,7 +221,7 @@ public class InternetConnectionManager extends Service {
 				socket = new Socket();
 				socket.bind(null);
 				InetSocketAddress address = new InetSocketAddress(
-						ConnectionHandler.host, ConnectionHandler.port);
+						ApplicationContext.serverIP, Integer.parseInt(ApplicationContext.serverPort));
 				socket.connect(address, TIMEOUT * 1000);
 				online = socket.isConnected();
 				socket.close();
@@ -229,8 +231,10 @@ public class InternetConnectionManager extends Service {
 			}
 
 			Intent intent = new Intent(CONNECTIVITY_ACTION);
-			if (online)
+			if (online) {
 				intent.setFlags(ONLINE_FLAG);
+				intent.putExtra("isOnline", true);
+			}
 
 			isServerAvailable = online;
 

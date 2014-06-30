@@ -87,6 +87,9 @@ public class MainMapViewActivity extends ActionBarActivity implements OnTouchLis
 		imgMap.setImageBitmap(bm);
 		imgMap.setVisibility(View.VISIBLE);
 		
+		matrix.setTranslate(1f, 1f);
+		imgMap.setImageMatrix(matrix);
+		
 		btnSetDefault.setEnabled(true);
 		
 		btnSetDefault.setOnClickListener(new OnClickListener() {

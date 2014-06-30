@@ -28,7 +28,6 @@ import org.redpin.android.db.MapHome;
 import org.redpin.android.net.InternetConnectionManager;
 import org.redpin.android.net.home.MapRemoteHome;
 import org.redpin.android.provider.RedpinContract;
-import org.redpin.android.ui.AddNewMapActivity;
 import org.redpin.android.ui.MainMapViewActivity;
 
 import android.app.ListActivity;
@@ -112,30 +111,9 @@ public class MapListActivity extends ListActivity implements
 	 */
 	@Override
 	protected void onDestroy() {
-		//unbindService(mConnection);
-		//unregisterReceiver(connectionChangeReceiver);
+		unbindService(mConnection);
+		unregisterReceiver(connectionChangeReceiver);
 		super.onDestroy();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_list, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		Intent intent = null;
-		
-		switch (item.getItemId()) {
-		case R.id.action_add:
-			intent = new Intent(MapListActivity.this, AddNewMapActivity.class);
-			startActivity(intent);
-			return true;
-		}
-		
-		return super.onOptionsItemSelected(item);
 	}
 	
 	/**
@@ -262,7 +240,9 @@ public class MapListActivity extends ListActivity implements
 	private BroadcastReceiver connectionChangeReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			isOnline = intent.getFlags() == InternetConnectionManager.ONLINE_FLAG;
+			if(intent.hasExtra("isOnline")) {
+				isOnline = intent.getBooleanExtra("isOnline", false);
+			}
 		}
 	};
 	
@@ -307,5 +287,4 @@ public class MapListActivity extends ListActivity implements
 		CursorAdapter adapter = (CursorAdapter) getListAdapter();
 		adapter.getFilter().filter(s);		
 	}
-
 }

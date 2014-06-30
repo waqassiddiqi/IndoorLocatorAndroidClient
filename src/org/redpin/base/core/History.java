@@ -5,10 +5,8 @@ import java.util.Date;
 /**
  * Describes a history containing a time and location user was present at
  * 
- * @author Philipp Bolliger (philipp@bolliger.name)
- * @author Simon Tobler (simon.p.tobler@gmx.ch)
- * @author Pascal Brogle (broglep@student.ethz.ch)
- * @version 0.2
+ * @author Waqas Hussain Siddiqui (waqas.siddiqi@hotmail.com)
+ * @version 0.1
  */
 public class History {
 
@@ -27,6 +25,12 @@ public class History {
 	 * Date and time at which this history entry was recorded
 	 */
 	protected Date date;
+
+	
+	/*
+	 * Task being performed when history was recorded
+	 */
+	protected Task task;
 	
 	/* **************** Constructors **************** */
 	public History() {
@@ -62,5 +66,13 @@ public class History {
 	
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 }

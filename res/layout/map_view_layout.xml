@@ -13,12 +13,14 @@
         android:text="Set as default map" />
 
     <ImageView
+        android:adjustViewBounds="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/btnSetDefault"
         android:id="@+id/imgMap"
         android:src="@drawable/butterfly"
         android:layout_width="wrap_content"
+        android:scaleType="matrix"
         android:layout_height="wrap_content" >
     </ImageView>
     

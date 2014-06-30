@@ -54,6 +54,8 @@ public class GsonFactory {
 					new BaseMapTypeAdapter());
 			builder.registerTypeAdapter(org.redpin.base.core.Measurement.class,
 					new BaseMeasurementTypeAdapter());
+			builder.registerTypeAdapter(org.redpin.base.core.User.class,
+					new BaseUserTypeAdapter());
 
 			// needed in order to deserialize proper the measurement vectors
 			builder.registerTypeAdapter(Measurement.class,

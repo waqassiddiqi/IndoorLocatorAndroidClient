@@ -101,7 +101,7 @@ public class ExceptionReporter {
 			public void run() {
 				// First of all transmit any stack traces that may be lying
 				// around
-				submitStackTraces();
+				//submitStackTraces();
 				UncaughtExceptionHandler currentHandler = Thread
 						.getDefaultUncaughtExceptionHandler();
 				if (currentHandler != null) {

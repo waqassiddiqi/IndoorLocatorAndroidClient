@@ -61,4 +61,8 @@ public class User extends org.redpin.base.core.User implements
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }

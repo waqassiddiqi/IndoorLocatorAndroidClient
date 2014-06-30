@@ -26,6 +26,10 @@
             android:launchMode="singleTask" >
         </activity>
         <activity
+            android:name=".ui.list.UserListActivity"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity
             android:name=".ui.SettingsActivity"
             android:launchMode="singleTask" >
         </activity>

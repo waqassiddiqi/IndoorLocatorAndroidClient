@@ -6,6 +6,22 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class PreferenceUtil {
+	
+	public static void setServerIP(String serverIP) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ApplicationContext.get());
+		SharedPreferences.Editor editor = prefs.edit();
+
+		editor.putString("sever_ip", serverIP);
+
+		editor.commit();
+	}
+
+	public static String getServerIP() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ApplicationContext.get());
+
+		return prefs.getString("sever_ip", "192.168.1.4");
+	}
+	
 	public static void setUsername(String username) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ApplicationContext.get());
 		SharedPreferences.Editor editor = prefs.edit();

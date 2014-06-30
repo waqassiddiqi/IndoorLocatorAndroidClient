@@ -32,6 +32,8 @@ import org.redpin.android.db.RemoteEntity;
 public class Map extends org.redpin.base.core.Map implements
 		RemoteEntity<Integer>, LocalEntity {
 
+	public Map() { }
+	
 	protected Integer id;
 
 	public Integer getRemoteId() {

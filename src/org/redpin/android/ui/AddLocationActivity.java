@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.json.JSONException;
-import org.redpin.android.ApplicationContext;
+import org.redpin.android.Constants;
 import org.redpin.android.R;
 import org.redpin.android.core.Fingerprint;
 import org.redpin.android.core.Location;
@@ -81,7 +81,7 @@ public class AddLocationActivity extends ActionBarActivity {
 			x = extra.getFloat("x");
 			y = extra.getFloat("y");
 			
-			mapId = extra.getInt("mapId");
+			mapId = extra.getLong("mapId");
 		}
 	}
 	
@@ -105,8 +105,8 @@ public class AddLocationActivity extends ActionBarActivity {
 		
 		Map map = EntityHomeFactory.getMapHome().getById(mapId);
 		
-		location.setMapXcord((int) x);
-		location.setMapYcord((int) y);
+		location.setMapXcord((int) Math.ceil(x));
+		location.setMapYcord((int) Math.ceil(y));
 		location.setMap(map);
 		
 		mLocation = location;
@@ -165,9 +165,7 @@ public class AddLocationActivity extends ActionBarActivity {
 				
 				Fingerprint fp = new Fingerprint(mLocation, m);
 				
-				new ServerTask("http://" + ApplicationContext.serverIP + ":" 
-						+ ApplicationContext.serverPort + ApplicationContext.applicationName
-						+ "/fingerprint", fp).execute();
+				new ServerTask(Constants.ADD_LOCATION_WITH_FINGERPRINT_URL, fp).execute();
 			}
 		}
 	};
@@ -197,7 +195,7 @@ public class AddLocationActivity extends ActionBarActivity {
 				}.execute();
 				
 				
-				gson.fromJson(str, new TypeToken<Fingerprint>() { }.getType());
+				return gson.fromJson(str, new TypeToken<Fingerprint>() { }.getType());
 				
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
@@ -205,6 +203,8 @@ public class AddLocationActivity extends ActionBarActivity {
 				e.printStackTrace();
 			} catch (JSONException e) {
 				e.printStackTrace();
+			} catch (Exception e) {
+				
 			}
 			
 			return null;
